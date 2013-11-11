@@ -25,7 +25,6 @@ def compute_dates(soup):
     for day in table_day_lut:
         dates[day] = date
         date += timedelta(days=1)
-
     return dates
 
 # Parse menu from the table
@@ -48,7 +47,7 @@ def parse_menu(soup_table):
         menu_type = cols[0].find(text=True)
         dayidx = 0
         # Also assuming the first day is a Monday :)
-        for td in cols[2::]:
+        for td in cols[1::]:
             day_menu = ' '.join(td.find_all(text=True))
             menu[table_day_lut[dayidx]].append((menu_type, day_menu))
             dayidx += 1
@@ -70,7 +69,8 @@ def parse(html):
         end_date = None
         for day, daily_menues in menu.iteritems():
             date = date_lut[day]
-
+            if len(daily_menues) == 0:
+                continue
             if start_date is None or start_date > date:
                 start_date = date
             if end_date is None or end_date < date:
