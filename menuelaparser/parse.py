@@ -66,14 +66,23 @@ def parse(html):
     for tbl in soup_tables:
         (mensa, menu) = parse_menu(tbl)
         entries = []
+        start_date = None
+        end_date = None
         for day, daily_menues in menu.iteritems():
             date = date_lut[day]
+
+            if start_date is None or start_date > date:
+                start_date = date
+            if end_date is None or end_date < date:
+                end_date = date
             for menue in daily_menues:
                 entries.append(MenuEntry(date, menue[0], menue[1]))
+
+        # ok parsed menu
         if menu_noon == None:
-            menu_noon = entries
+            menu_noon = Menu(start_date, end_date, entries)
         elif menu_evening == None:
-            menu_evening = entries
+            menu_evening = Menu(start_date, end_date, entries)
         else:
             break
             # Ignore the rest

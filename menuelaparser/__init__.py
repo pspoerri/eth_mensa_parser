@@ -5,6 +5,15 @@ __author__ = 'Pascal Spörri'
 from parse import parse
 from menu import MenuEntry, Menu, Mensa
 
+mensa_lut = {
+    'mm': 11,
+    'cla': 13,
+    'etz': 9,
+    'hph': 1,
+    'cab': 3,
+    'ifw': 6,
+} 
+
 mensa_url = "http://www.gastro.ethz.ch/menuela_overview?viewType=weekly&facility={facility}&language={language}"
 
 # Alternative feeds provided for the mensa app
@@ -13,7 +22,7 @@ mensa_url = "http://www.gastro.ethz.ch/menuela_overview?viewType=weekly&facility
 
 def get_menu(id, lang="DE"):
     import urllib
-    html =  urllib.urlopen(mensa_url.format(facility=id, language=lang))
+    html =  urllib.urlopen(mensa_url.format(facility=mensa_lut[id], language=lang))
     return parse(html)
 def get_mensa(id, lang="DE"):
     menu_noon, menu_evening = get_menu(id, lang)
