@@ -41,7 +41,6 @@ def parse_menu(soup_table):
         'Saturday': [],
         'Sunday': [],
     }
-    print "Mensa: "+mensa
 
     # Assuming the first row shows the weekdays
     for tr in rows[2::]:
@@ -66,12 +65,10 @@ def parse(html):
     menu_evening = None
     for tbl in soup_tables:
         (mensa, menu) = parse_menu(tbl)
-        print mensa
         entries = []
         for day, daily_menues in menu.iteritems():
             date = date_lut[day]
             for menue in daily_menues:
-                print menue
                 entries.append(MenuEntry(date, menue[0], menue[1]))
         if menu_noon == None:
             menu_noon = entries
