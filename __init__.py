@@ -4,7 +4,7 @@
 from menuelaparser import get_mensa, get_menu
 
 def main():
-    print get_mensa(4)
+    print get_mensa('ifw')
 
 
 if "__main__" == __name__:

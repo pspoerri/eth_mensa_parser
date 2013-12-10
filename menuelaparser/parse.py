@@ -20,7 +20,7 @@ def compute_dates(soup):
     m = re.match(".+\s(\d{1,2}\.\d{1,2}\.\d{4})", header).group(1)
     from datetime import timedelta
     from dateutil import parser
-    date = parser.parse(m)
+    date = parser.parse(m,dayfirst=True)
     dates = {}
     for day in table_day_lut:
         dates[day] = date
